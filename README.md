@@ -28,8 +28,8 @@ Installer l'application Expo Go sur son téléphone
 
 ## Démarrage
 
-Dans l'invité de commande, aller dans le dossier du projet
-Executez la commande ``npm expo start`` ou ``npx expo start`` ou ``expo start`` ou ``npm start``
+Dans l'invite de commande, aller dans le dossier du projet
+Exécutez la commande ``npm expo start`` ou ``npx expo start`` ou ``expo start`` ou ``npm start``
 Dans l'invité de commande, taper ``w`` pour lancer la preview via votre navigateur web. tapez ``a`` pour visualiser sur Android via l'emulateur d'Android Studio préalablement lancé. 
 Scannez le QR code (qui se trouvant dans l'invité de commande) sur votre téléphone depuis l'application Expo sur Android ou depuis l'appareil photo sur iOS. 
 Vous pouvez lancer la visualisation sur le navigateur, l'émulateur et votre téléphone en même temps.
@@ -48,10 +48,10 @@ _(pour le lien mettez simplement l'URL de votre projets suivi de ``/tags``)_
 Listez le(s) auteur(s) du projet ici !
 * **Rojinth** _alias_ [@outout14](https://github.com/outout14)
 * **Tiffany** _alias_ [@outout14](https://github.com/outout14)
-* **Yvonne** _alias_ [@outout14](https://github.com/outout14)
+* **Yvonne** _alias_ [@ylu211](https://github.com/ylu211)
 
 
-_(pour le lien mettez simplement l'URL de votre projet suivi de ``/contirubors``)_
+_(pour le lien mettez simplement l'URL de votre projet suivi de ``/contributors``)_
 
 
 
