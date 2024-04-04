@@ -1,26 +1,48 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { TextInput } from 'react-native-web';
+import React, { useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './services/firebase';
+import RegisterScreen from './screens/RegisterScreen';
+import Homescreen from './screens/Homescreen';
+import LoginScreen from './screens/LoginScreen';
 
-export default function App() {
+const Stack = createStackNavigator();
+
+function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setLoggedIn(!!user);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>HELLOOOOO WOOORLD !!!!</Text>
-      <Text>Ceci est un sous-titre</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+        <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        <Stack.Screen
+          name="Homescreen"
+          component={Homescreen}
+          options={{ headerShown: false }}
+          listeners={({ navigation }) => ({
+            beforeRemove: () => {
+              if (!loggedIn) {
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'LoginScreen' }],
+                });
+              }
+            },
+          })}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#A3B18A',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-});
+export default App;
