@@ -1,26 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { TextInput } from 'react-native-web';
+import { StyleSheet, Text, View, TextInput, TouchableHighlight, Pressable, FlatList, Button } from 'react-native';
+//import { getCityGPSCoord, getCityWeather } from "./api/openWeather";
+//import { DonneesMeteo } from "./models/DonneesMeteo";
+import { useState, useEffect } from 'react';
+import * as React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+//import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { HomeScreen } from "./screens/HomeScreen";
+import { FavoriteScreen } from "./screens/FavoriteScreen";
+
+const Stack = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>HELLOOOOO WOOORLD !!!!</Text>
-      <Text>Ceci est un sous-titre</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Favorite" component={FavoriteScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#A3B18A',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-});
