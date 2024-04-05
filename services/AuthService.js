@@ -1,5 +1,6 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
-import { auth } from './firebase';
+import { auth, db } from './firebase';
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 class AuthService {
   constructor() {
@@ -19,23 +20,40 @@ class AuthService {
     return AuthService.instance;
   }
 
-  async setPseudo(pseudo) {
+  async setPseudo(uid, pseudo) {
     try {
-      this.pseudo = pseudo;
-      console.log(pseudo);
+      await setDoc(doc(db, "users", uid), {
+        pseudo: pseudo,
+      });
     } catch (error) {
-      console.error(error);
+      console.error("error setting pseudo:", error);
+      throw error;
     }
   }
 
-  getPseudo() {
-    return this.pseudo || 'Utilisateur'; 
+  async getPseudo(uid) {
+    try {
+      const userDoc = await getDoc(doc(db, "users", uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        return userData.pseudo;
+      } else {
+        console.log("user not found");
+        return null; 
+      }
+    } catch (error) {
+      throw error;
+    }
   }
 
-  async signUp(email, password) {
+  async signUp (email, password, pseudo) {
     try {
-      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
-      return userCredential.user;
+      const { user } = await createUserWithEmailAndPassword(this.auth, email, password);
+      await setDoc(doc(db, "users", user.uid), {
+        pseudo: pseudo,
+        email: user.email,
+      });
+      return user;
     } catch (error) {
       throw error;
     }

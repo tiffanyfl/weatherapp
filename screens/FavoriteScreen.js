@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, TextInput, TouchableHighlight, Pressable, FlatList, Button } from 'react-native';
-import { useState, useEffect } from 'react'
 
-export const FavoriteScreen = ({navigation}) => {
+const FavoriteScreen = ({navigation}) => {
     return (
       <View>
       <Text>Hello !!!!</Text>
@@ -11,4 +10,6 @@ export const FavoriteScreen = ({navigation}) => {
       />
     </View>
     );
-  };
+};
+
+export default FavoriteScreen;

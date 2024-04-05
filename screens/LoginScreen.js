@@ -3,18 +3,18 @@ import React, { useState } from 'react';
 import { useNavigation } from "@react-navigation/native";
 import authService from "../services/AuthService";
 
-
 const LoginScreen = () => {
+  const navigation = useNavigation();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigation = useNavigation();
 
   const handleLogin = async () => {
     try {
       setError(''); 
       await authService.signIn(email, password);
-      navigation.replace('Homescreen'); 
+      navigation.navigate('HomeScreen'); 
     } catch (error) {
       setError(error.message); 
     }

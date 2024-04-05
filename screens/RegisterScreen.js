@@ -24,9 +24,9 @@ function RegisterScreen() {
       setError(null);
       if (password === confirmPassword) {
         if (Object.values(passwordCriteria).every(criteria => criteria === true)) {
-          await authService.signUp(email, password);
-          await authService.setPseudo(pseudo);
-          navigation.replace('Homescreen');
+          const user = await authService.signUp(email, password, pseudo);
+          await authService.setPseudo(user.uid, pseudo);
+          navigation.replace('HomeScreen');
           alert("Compte créé avec succès!");
         } else {
           setError("Le mot de passe ne respecte pas tous les critères.");

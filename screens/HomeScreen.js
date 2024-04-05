@@ -6,8 +6,15 @@ import { DonneesMeteo } from "../models/DonneesMeteo";
 import { Ville } from "../models/Ville";
 import { StatusBar } from 'expo-status-bar';
 import { TemplateMeteo } from '../components/TemplateMeteo';
+import authService from '../services/AuthService';
+import { useNavigation } from '@react-navigation/native';
+import { onAuthStateChanged } from 'firebase/auth';
 
-export const HomeScreen = ({navigation}) => {
+const HomeScreen = ({}) => {
+    const navigation = useNavigation();
+
+    const [userUid, setUserUid] = useState(null);
+    const [pseudo, setPseudo] = useState('');
 
     const [locations, setLocations] = useState([]);
     const [meteo, setMeteo] = useState({});
@@ -27,8 +34,46 @@ export const HomeScreen = ({navigation}) => {
 
 
     useEffect(() => {
-      
-    }, []); 
+      const unsubscribe = onAuthStateChanged(authService.auth, (user) => {
+        if (user) {
+          setUserUid(user.uid);
+          authService.getPseudo(user.uid)
+                    .then(userPseudo => {
+                        console.log("ici" + userPseudo);
+                        setPseudo(userPseudo);
+                    })
+                    .catch(error => {
+                        console.error("Error fetching pseudo:", error);
+                    });
+        } else {
+          navigation.reset({
+            index: 1,
+            routes: [
+              { name: 'LoginScreen'},
+            ]
+          });
+          console.log("retour 1");
+          //navigation.navigate('LoginScreen');
+        }
+
+      });
+      return () => unsubscribe();
+    }, []);
+  
+    const logout = async () => {
+      try {
+        navigation.reset({
+          index: 1,
+          routes: [
+            { name: 'LoginScreen'},
+          ]
+        });
+        await authService.signOut();
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    
 
     useEffect(() => {
       const timer = setTimeout(() => {
@@ -148,9 +193,13 @@ export const HomeScreen = ({navigation}) => {
 
           ) : null }
 
-      
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Logged in {pseudo}</Text>
+      <Button title="Log out" onPress={logout} />
+    </View>
       
     </View>
+    
     
   );
 };
@@ -167,3 +216,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+export default HomeScreen;
