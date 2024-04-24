@@ -34,7 +34,7 @@ function App() {
         <Tab.Navigator>
           <Tab.Screen name="HomeScreen"
               component={HomeScreen}
-              options={{ headerShown: false }}
+              options={{ headerShown: true }}
               listeners={({ navigation }) => ({
                 beforeRemove: () => {
                   if (!loggedIn) {

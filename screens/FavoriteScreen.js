@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, TouchableHighlight, Pressable, FlatList, Button, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableHighlight, Pressable, FlatList, Button, TouchableOpacity, SafeAreaView, ScrollView  } from 'react-native';
 import { useState, useEffect } from 'react';
 import { favoriteList } from "./HomeScreen";
 import { getCityWeather } from "../api/openWeather";
@@ -13,8 +13,8 @@ import { useNavigation } from '@react-navigation/native';
 import { getFavoriteCity } from '../services/FavoriteCities';
 
 
-const FavoriteScreen = ({route }) => {
-
+const FavoriteScreen = ({route, param }) => {
+  console.log(param);
   const userId = auth.currentUser.uid;
   const navigation = useNavigation();
   //let locations = favoriteList.favoriteCitiesArray;
@@ -97,7 +97,7 @@ const FavoriteScreen = ({route }) => {
     return (
       <SafeAreaView>
       <Text>Hello !!!!</Text>
-
+      <ScrollView> 
 {weather.map((location, key) => {
         console.log(location);
         //console.log(key);
@@ -112,6 +112,7 @@ const FavoriteScreen = ({route }) => {
         </View>
         );
       })}
+      </ScrollView>
       <Button
         title="Go to Home"
         onPress={() => navigation.navigate('HomeScreen')}

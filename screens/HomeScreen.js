@@ -88,8 +88,12 @@ const HomeScreen = ({}) => {
     getFavoriteCity(userUid).then((item) => {
       console.log(item);
       //setTableau(item);
-
+      if(item.length == 0){
+        setTableau([]);
+      } else {
       setTableau(item);
+
+      }
       //tableau.push(item);
       //console.log(tableau);
       return item;
@@ -200,7 +204,8 @@ const HomeScreen = ({}) => {
     storeFavoriteCity(userUid, tableau);
     //storeFavoriteCity(userUid, newElement2);
 
-    navigation.navigate('Favorite', tableau);
+    //navigation.navigate('Favorite', tableau);
+    navigation.navigate('Favorite', newElement2);
   };
 
     function searchList({isClicked}){
@@ -214,7 +219,8 @@ const HomeScreen = ({}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{backgroundColor: "#C4CFB2", width: "90%", borderColor: '#C4CFB2'}}>
+      <Text>Hello !!!!</Text>
+      <SafeAreaView style={{backgroundColor: "#C4CFB2", width: "90%", borderColor: '#C4CFB2'}}>
       <TextInput
             style={styles.input}
             onChangeText={input => onChangeSearch(input)}
@@ -240,7 +246,7 @@ const HomeScreen = ({}) => {
             </View>
           );
       })}           
-      </View>
+      </SafeAreaView>
 
       {(Object.keys(weather).length) > 0 ? (
         <View style={{width: "90%",borderColor: '#C4CFB2'}}>
@@ -251,7 +257,8 @@ const HomeScreen = ({}) => {
           <Text style={styles.title}>Hello {cityName} !!!!</Text>
           <WeatherComponent obj={weather}></WeatherComponent>
           </View>
-        ) : null }
+        ) : 
+        <Text>Search a city to view the weather</Text> }
 
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Logged in {pseudo}</Text>
