@@ -63,7 +63,7 @@ const FavoriteScreen = ({route }) => {
         if(weather.length = 0){
           setWeather(weatherDataObject);
         } else {
-          weather.slice(1);
+          //weather.slice(1);
           setWeather(weather => [...weather, weatherDataObject]);
         }
         

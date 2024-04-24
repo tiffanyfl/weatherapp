@@ -83,27 +83,23 @@ const HomeScreen = ({}) => {
   console.log("user id : ", userUid);
 
   // Récupérer le tableau des villes favorites du user depuis la BDD
-  //useEffect(() => {
+  useEffect(() => {
+    let ignore = false;
     getFavoriteCity(userUid).then((item) => {
       console.log(item);
       //setTableau(item);
-      if(item.length > 0){
-        for(let i = 0; i < item.length; i++){
-          console.log(item[i]);
-  
-          setTableau(tableau => [...tableau,item[i]]);
-          //tableau.push(item[i]);
-          //tableau[i] = item[i];
-        }
-      }
-      
+
+      setTableau(item);
       //tableau.push(item);
-      console.log(tableau);
-      return false;
+      //console.log(tableau);
+      return item;
   
     });
-  //}, [getFavoriteCity]);
-
+    return () => {
+      ignore = true;
+    };
+  }, [userUid]);
+  console.log(tableau);
   
 
   
@@ -170,30 +166,6 @@ const HomeScreen = ({}) => {
     }
     
   }, [search, list]);
-
-
-
-  let sayHello2 = () => {
-    console.log(tableau);
-    cityObject.subscribe(favoriteList);
-    cityObject.notify(cityObject.nom);
-    cityObject.setFavoris(true);
-    favoriteList.setFavoriteCitiesArray(cityObject);
-
-    let newElement2 = {"nom": cityObject.nom, "lat": cityObject.lat, "lon": cityObject.lon};
-    if(tableau.length == 0){
-      setTableau(newElement2);
-    } else {
-    setTableau(tableau => [...tableau, newElement2]);
-
-    }
-    console.log(tableau);
-
-    storeFavoriteCity(userUid, tableau);
-    //storeFavoriteCity(userUid, newElement2);
-
-    navigation.navigate('Favorite', tableau);
-  }
   
   
   sayHello = () => {
@@ -205,27 +177,26 @@ const HomeScreen = ({}) => {
 
     //console.log(tableau);
 
-    for (let i = 0; i < favoriteList.favoriteCitiesArray.length; i++){
-    let newElement = {"nom": favoriteList.favoriteCitiesArray[i].nom, "lat": favoriteList.favoriteCitiesArray[i].lat, "lon": favoriteList.favoriteCitiesArray[i].lon};
+   // for (let i = 0; i < favoriteList.favoriteCitiesArray.length; i++){
+   // let newElement = {"nom": favoriteList.favoriteCitiesArray[i].nom, "lat": favoriteList.favoriteCitiesArray[i].lat, "lon": favoriteList.favoriteCitiesArray[i].lon};
       //setTableau(tableau => [...tableau, newElement]);
       //setTableau([tableau, newElement]);
-      tableau[i] = newElement;
+   //   tableau[i++] = newElement;
       //
       //tableau.push(newElement);
 
-    }
+   // }
     let favoriteListLast = favoriteList.favoriteCitiesArray.slice(-1);
     let newElement1 = {"nom": favoriteListLast[0].nom, "lat": favoriteListLast[0].lat, "lon": favoriteListLast[0].lon};
     let newElement2 = {"nom": cityObject.nom, "lat": cityObject.lat, "lon": cityObject.lon};
     
     //setTableau(tableau => [...tableau, newElement]);
-    setTableau(tableau => [...tableau, newElement2]);
-    //tableau.push(newElement1);
-    console.log(newElement1);
+    //setTableau(tableau => [...tableau, newElement2]);
+    tableau.push(newElement2);
+    //console.log(newElement1);
     console.log(newElement2);
-    //console.log(tableau);
+    console.log(tableau);
 
-    console.log(favoriteList);
     storeFavoriteCity(userUid, tableau);
     //storeFavoriteCity(userUid, newElement2);
 
