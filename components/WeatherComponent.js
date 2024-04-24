@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View, TextInput, TouchableHighlight, Pressable, FlatList, ScrollView, Image, Button } from 'react-native';
 import { useState, useEffect } from 'react'
 
-export const TemplateMeteo = (objetMeteo) => {
+export const WeatherComponent = (objetMeteo) => {
     const obj = objetMeteo;
 
     //console.log(objetMeteo.obj);
     //console.log(obj.obj.temperatureActuelle);
     return (
-      <View style={{width: "100%",borderColor: '#C4CFB2', borderWidth:3, flexDirection: 'row',flexWrap: 'nowrap', justifyContent: 'space-between'}}>
+      <View style={{width: "100%",borderColor: '#C4CFB2', borderWidth:3, flexDirection: 'column',flexWrap: 'nowrap', justifyContent: 'space-between', alignItems: 'center'}}>
         <View style={{flexDirection: 'column', width:"40%", alignItems: 'center'}} >
           <View>
             <Text style={styles.bigBoldWhiteText}>{objetMeteo.obj.nomVille} - {objetMeteo.obj.description}</Text> 

@@ -1,4 +1,4 @@
-export class DonneesMeteo  {
+export class WeatherData  {
     nomVille = null;
     description = null;
     temperatureActuelle = null;
@@ -104,7 +104,7 @@ export class DonneesMeteo  {
             return this;
         }
         build() {
-            const donneesMeteo = new DonneesMeteo(
+            const weatherData = new WeatherData(
                 this.nomVille,
                 this.description,
                 this.temperatureActuelle,
@@ -122,13 +122,13 @@ export class DonneesMeteo  {
                 this.coucherSoleilHeure,
                 this.coucherSoleilMinute,
             )
-            return donneesMeteo;
+            return weatherData;
 
         }
     }
 
-    constructor(nomVille, description, temperatureActuelle, temperatureMin, temperatureMax, ressenti, humidite, pression, nuages, icone, ventDegre, ventVitesse, leverSoleilHeure, leverSoleilMinute, coucherSoleilHeure, coucherSoleilMinute) {
-        this.nomVille = nomVille;
+    constructor(nom, description, temperatureActuelle, temperatureMin, temperatureMax, ressenti, humidite, pression, nuages, icone, ventDegre, ventVitesse, leverSoleilHeure, leverSoleilMinute, coucherSoleilHeure, coucherSoleilMinute) {
+        this.nomVille = nom;
         this.description = description;
         this.temperatureActuelle = temperatureActuelle;
         this.temperatureMin = temperatureMin;
@@ -164,7 +164,7 @@ export class DonneesMeteo  {
     }
 
       toString() {
-        return `nomVille: ${this.nomVille}
+        return `nomVille: ${this.nom}
             description: ${this.description}
             temperatureActuelle: ${this.temperatureActuelle}
             temperatureMin: ${this.temperatureMin}

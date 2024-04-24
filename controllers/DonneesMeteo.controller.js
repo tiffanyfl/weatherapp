@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, TouchableHighlight, Pressable, FlatList } from 'react-native';
 import { getCityGPSCoord, getCityWeather } from "../api/openWeather";
-import { DonneesMeteo } from "../models/DonneesMeteo";
+import { DonneesMeteo } from "../models/WeatherData.model";
 import { useState, useEffect } from 'react';
 import * as React from 'react';
 
@@ -18,12 +18,7 @@ export const DonneesMeteoController = (() => {
     //let villeRecherchee = getCityGPSCoord(search);
     //console.log("VilleRecherchee", villeRecherchee);
 
-    console.log(list);
-
-
-    useEffect(() => {
-        
-    }, []); 
+    console.log(list); 
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -69,8 +64,6 @@ export const DonneesMeteoController = (() => {
             .build();
     
             setMeteo(testMeteo);
-            //console.log(getall);
-            //console.log(testMeteo.getTemperatureActuelle());
             return val;
             });
         
@@ -86,8 +79,4 @@ export const DonneesMeteoController = (() => {
     console.log(meteo);
     //console.log(meteoMain.temp);
     console.log(testMeteo);
-
-
-
-    console.log("FIN");
 });

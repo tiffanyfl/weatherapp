@@ -1,15 +1,29 @@
 // Le Parent
-export class Ville {
+export class City {
     nom = null;
     lat = null;
     lon = null;
-    favoris = false;
+    favoris = null;
+    observers = null;
 
     constructor(nom, lat, lon, favoris) {
         this.nom = nom;
         this.lat = lat;
         this.lon = lon;
         this.favoris = favoris;
+        this.observers = []
+    }
+
+    subscribe(observer){
+        this.observers.push(observer);
+    }
+
+    unsubscribe(observer){
+        this.observers.filter(obs => obs !== observer);
+    }
+
+    notify(data) {
+        this.observers.forEach(observer => observer.addToFavorite(data));
     }
 
 
@@ -30,8 +44,11 @@ export class Ville {
 
     setFavoris(value) {
         this.favoris = value;
+        this.notify(this.favoris);
         return this.favoris;
     }
+
+    
 
     
  /*
