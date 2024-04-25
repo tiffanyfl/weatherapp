@@ -18,6 +18,33 @@ const WeatherAlertSettings = () => {
   const [selectedAlert, setSelectedAlert] = useState('');
   const [meteoData, setMeteoData] = useState(null);
 
+  const alerts = [
+    {
+      name: 'Alerte Typhon (km/h)',
+      value: windAlert,
+      info: 'Risque de typhon à partir de 250km/h',
+      setter: setWindAlert,
+    },
+    {
+      name: 'Alerte Pluie Diluvienne (mm/h)',
+      value: rainAlert,
+      info: 'Risque de pluie diluvienne à partir de 5 mm/h',
+      setter: setRainAlert,
+    },
+    {
+      name: 'Alerte Canicule (°C)',
+      value: heatAlert,
+      info: 'Risque de canicule à partir de 40°C',
+      setter: setHeatAlert,
+    },
+    {
+      name: 'Alerte Froid (°C)',
+      value: coldAlert,
+      info: 'Risque de grand froid à partir de -20°C',
+      setter: setColdAlert,
+    },
+  ];
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -42,9 +69,16 @@ const WeatherAlertSettings = () => {
     setValue((prevValue) => prevValue + 1);
   };
 
-  const decreaseValue = (setValue) => {
-    setValue((prevValue) => (prevValue > 0 ? prevValue - 1 : 0));
+  const decreaseValue = (setValue, alertName) => {
+    setValue((prevValue) => {
+      if (alertName === coldAlert) {
+        return prevValue - 1;
+      } else {
+        return prevValue > 0 ? prevValue - 1 : 0;
+      }
+    });
   };
+  
 
   const showAlertInfo = (alert) => {
     setSelectedAlert(alert);
@@ -95,34 +129,6 @@ const WeatherAlertSettings = () => {
       checkAlertThresholds(userId, meteoData);
     }
   }, [userId, meteoData]);
-  
-
-  const alerts = [
-    {
-      name: 'Alerte Typhon (km/h)',
-      value: windAlert,
-      info: 'Risque de typhon à partir de 250km/h',
-      setter: setWindAlert,
-    },
-    {
-      name: 'Alerte Pluie Diluvienne (mm/h)',
-      value: rainAlert,
-      info: 'Risque de pluie diluvienne à partir de 5 mm/h',
-      setter: setRainAlert,
-    },
-    {
-      name: 'Alerte Canicule (°C)',
-      value: heatAlert,
-      info: 'Risque de canicule à partir de 40°C',
-      setter: setHeatAlert,
-    },
-    {
-      name: 'Alerte Froid (°C)',
-      value: coldAlert,
-      info: 'Risque de grand froid à partir de -20°C',
-      setter: setColdAlert,
-    },
-  ];
 
   return (
     <View style={styles.container}>
@@ -146,9 +152,9 @@ const WeatherAlertSettings = () => {
           </TouchableOpacity> 
           <Text style={styles.alertText}>{alert.name}:</Text>
           <View style={styles.valueContainer}>
-            <TouchableOpacity style={styles.button} onPress={() => decreaseValue(alert.setter)}>
-              <Text style={styles.buttonText}>-</Text>
-            </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => decreaseValue(alert.setter, alert.value)}>
+            <Text style={styles.buttonText}>-</Text>
+          </TouchableOpacity>
             <Text style={styles.alertValue}>{alert.value}</Text>
             <TouchableOpacity style={styles.button} onPress={() => increaseValue(alert.setter)}>
               <Text style={styles.buttonText}>+</Text>
