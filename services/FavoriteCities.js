@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, deleteDoc, collection, query, where, getDocs, deleteField, updateDoc, FieldValue, arrayRemove  } from "firebase/firestore";
 import {db} from "./firebase";
 
 export const storeFavoriteCity = async(userId, cities) => {
@@ -29,3 +29,23 @@ export const getFavoriteCity = async(userId) => {
         throw error;
     }
 };
+
+export const deleteFavoriteCity = async(userId, city, index) => {
+    try {
+        
+        /*const querySnapshot = await getDocs(collection(db, "favoriteCities", userId, 'cities'));
+        querySnapshot.forEach((doc) => {
+        console.log(`${doc.id} => ${doc.data()}`);
+        });*/
+        //const cityRef = db.collection('favoritesCities').doc(userId);
+        const cityRef = doc(db, 'favoriteCities', userId);
+        await updateDoc(cityRef, {
+            //index: deleteField();
+            cities: arrayRemove(city),
+        });
+        //await deleteDoc(doc(db, "favoriteCities", userId));
+    } catch(error){
+        console.log(error);
+        throw error;
+    }
+}
