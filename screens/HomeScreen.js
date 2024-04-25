@@ -13,13 +13,17 @@ import authService from '../services/AuthService';
 import { useNavigation } from '@react-navigation/native';
 import { onAuthStateChanged } from 'firebase/auth';
 import { storeFavoriteCity, getFavoriteCity } from '../services/FavoriteCities';
+import { WeatherAlertPreferences } from '../models/AlertPreferences.model';
+import alertFromFavorite from '../controllers/AlertFromFavorite.controller';
+import { auth } from '../services/firebase';
 
 
 export let favoriteList = new FavoriteCities([]);
 const HomeScreen = ({}) => {
   const navigation = useNavigation();
+  const userId = auth.currentUser.uid;
+  const meteoData = alertFromFavorite(userId);
 
-  const [userUid, setUserUid] = useState(null);
   const [pseudo, setPseudo] = useState('');
 
   const [locations, setLocations] = useState([]);
@@ -38,26 +42,24 @@ const HomeScreen = ({}) => {
   
   let addCityToFavorite;
 
-  // Authentification
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(authService.auth, (user) => {
       if (user) {
-        setUserUid(user.uid);
-        authService.getPseudo(user.uid)
-        .then(userPseudo => {
-          console.log("ici" + userPseudo);
-          setPseudo(userPseudo);
-        })
-        .catch(error => {
-          console.error("Error fetching pseudo:", error);
-        });
+        authService.getPseudo(userId)
+                  .then(userPseudo => {
+                      console.log("ici" + userPseudo);
+                      setPseudo(userPseudo);
+                  })
+                  .catch(error => {
+                      console.error("Error fetching pseudo:", error);
+                  });
       } else {
         navigation.reset({
           index: 1,
           routes: [
             { name: 'LoginScreen'},
           ]
-      });
+        });
         console.log("retour 1");
         //navigation.navigate('LoginScreen');
       }
@@ -65,7 +67,7 @@ const HomeScreen = ({}) => {
     });
     return () => unsubscribe();
   }, []);
-  
+
   const logout = async () => {
     try {
       navigation.reset({
@@ -78,15 +80,13 @@ const HomeScreen = ({}) => {
     } catch (error) {
       console.error(error);
     }
-  };
-    
-  //console.log("user id : ", userUid);
+};
 
   // Récupérer le tableau des villes favorites du user depuis la BDD
   
   useEffect(() => {
     
-  }, [userUid]);
+  }, [userId]);
   const timer = setTimeout(() => {
     let ignore = false;
     getFavoriteCity(userUid).then((item) => {
@@ -175,7 +175,7 @@ const HomeScreen = ({}) => {
     //console.log(newElement2);
     //console.log(tableau);
 
-    storeFavoriteCity(userUid, tableau);
+    storeFavoriteCity(userId, tableau);
     //storeFavoriteCity(userUid, newElement2);
 
     //navigation.navigate('Favorite', tableau);
