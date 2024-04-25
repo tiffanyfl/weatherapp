@@ -80,30 +80,36 @@ const HomeScreen = ({}) => {
     }
   };
     
-  console.log("user id : ", userUid);
+  //console.log("user id : ", userUid);
 
   // Récupérer le tableau des villes favorites du user depuis la BDD
+  
   useEffect(() => {
+    
+  }, [userUid]);
+  const timer = setTimeout(() => {
     let ignore = false;
     getFavoriteCity(userUid).then((item) => {
-      console.log(item);
+      //console.log(item);
       //setTableau(item);
-      if(item.length == 0){
+      /*if(item.length == 0){
         setTableau([]);
       } else {
       setTableau(item);
-
-      }
+  
+      }*/
+      setTableau(item);
       //tableau.push(item);
       //console.log(tableau);
       return item;
   
     });
-    return () => {
+    /*return () => {
       ignore = true;
-    };
-  }, [userUid]);
-  console.log(tableau);
+    };*/
+  }, 5000);
+  //return () => clearTimeout(timer)
+  //console.log(tableau);
   
 
   
@@ -111,9 +117,7 @@ const HomeScreen = ({}) => {
   // search for a city and show weather data when user finished typing in the search bar
   useEffect(() => {
     
-    if(search == ''){
-      //console.log("On ne recherche rien encore");
-    } else {
+    if(search !== ''){
       const timer = setTimeout(() => {
       //console.log("On recherche quelque chose :  " + search);
 
@@ -219,25 +223,28 @@ const HomeScreen = ({}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Hello !!!!</Text>
-      <SafeAreaView style={{backgroundColor: "#C4CFB2", width: "90%", borderColor: '#C4CFB2'}}>
+      <View style={{padding: 10}}>
+        <Text style={{color: 'white', fontWeight: 'bold'}}>Welcome {pseudo}</Text>
+        <Button color="#7E8572" title="Log out" onPress={logout} />
+      </View>
+      <View style={{ padding: 40 }}>
       <TextInput
             style={styles.input}
             onChangeText={input => onChangeSearch(input)}
             value={search}
-            placeholder='search'
+            placeholder='search a city'
         />
          {locations.map((location, key) => {
           return (
-            <View>
+            <View style={{height: 20}}>
                 <FlatList
                   data={[{title: 'Title Text', key: 'item1'}]}
                   renderItem={({item, index, separators}) => (
                     <TouchableOpacity
                       key={item.key}
                       onPress={() => onchangeList(key)}>
-                      <View style={{backgroundColor: 'white'}}>
-                        <Text>{location.name}, {location.state}, {location.country}</Text>
+                      <View style={{backgroundColor: '#C4CFB2', color: 'white'}}>
+                        <Text style={{ color: '#7E8572'}}>{location.name}, {location.state}, {location.country}</Text>
                       </View>
                     </TouchableOpacity>
                   )}
@@ -246,24 +253,22 @@ const HomeScreen = ({}) => {
             </View>
           );
       })}           
-      </SafeAreaView>
+      </View>
 
       {(Object.keys(weather).length) > 0 ? (
-        <View style={{width: "90%",borderColor: '#C4CFB2'}}>
+        <View style={{ flex: 1 }}>
          <Button
              title="Add to favorites"
              onPress={sayHello}
+             color="#7E8572"
           />
-          <Text style={styles.title}>Hello {cityName} !!!!</Text>
           <WeatherComponent obj={weather}></WeatherComponent>
           </View>
         ) : 
-        <Text>Search a city to view the weather</Text> }
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', }}><Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>Search a city to see the weather 👀</Text></View> 
+        }
 
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Logged in {pseudo}</Text>
-        <Button title="Log out" onPress={logout} />
-      </View>
+      
       
     </SafeAreaView>
     
@@ -275,12 +280,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#A3B18A',
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    justifyContent: 'center',
+    alignContent: 'flex-start'
   },
   title: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  input: {
+    backgroundColor: "#C4CFB2",
+    width: 300,
+    height: 40,
   },
 });
 
