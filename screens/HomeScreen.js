@@ -89,7 +89,7 @@ const HomeScreen = ({}) => {
   }, [userId]);
   const timer = setTimeout(() => {
     let ignore = false;
-    getFavoriteCity(userUid).then((item) => {
+    getFavoriteCity(userId).then((item) => {
       if(item.length == 0){
         setTableau([]);
       } else {
