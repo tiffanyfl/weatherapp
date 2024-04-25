@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, TouchableHighlight, Pressable, FlatList } from 'react-native';
 import { getCityGPSCoord, getCityWeather } from "../api/openWeather";
-import { DonneesMeteo } from "../models/WeatherData.model";
+import { WeatherData } from "../models/WeatherData.model";
 import { useState, useEffect } from 'react';
 import * as React from 'react';
 

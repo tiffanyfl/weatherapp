@@ -1,85 +1,54 @@
+// Ecran de paramètrage des alertes
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { getCityWeather } from "../api/openWeather";
 import { storeAlertPreferences, getAlertPreferences, checkAlertThresholds } from '../services/AlertNotification'; 
 import { auth } from '../services/firebase';
-import { getFavoriteCity } from '../services/FavoriteCities';
+import { WeatherAlertPreferences } from '../models/AlertPreferences.model';
+import alertFromFavorite from '../controllers/AlertFromFavorite.controller';
 
-
-const WeatherAlertSettings = () => {
+const PreferenceScreen = () => {
   const userId = auth.currentUser.uid;
+  const meteoData = alertFromFavorite(userId);
 
-  const [windAlert, setWindAlert] = useState(null);
-  const [rainAlert, setRainAlert] = useState(null);
-  const [heatAlert, setHeatAlert] = useState(null);
-  const [coldAlert, setColdAlert] = useState(null);
+  const [alertPreferences, setAlertPreferences] = useState(WeatherAlertPreferences);
   const [infoVisible, setInfoVisible] = useState(false);
   const [selectedAlert, setSelectedAlert] = useState('');
-  const [meteoData, setMeteoData] = useState(null);
 
   const alerts = [
     {
       name: 'Alerte Typhon (km/h)',
-      value: windAlert,
+      key: 'windThreshold',
       info: 'Risque de typhon à partir de 250km/h',
-      setter: setWindAlert,
     },
     {
       name: 'Alerte Pluie Diluvienne (mm/h)',
-      value: rainAlert,
+      key: 'rainThreshold', 
       info: 'Risque de pluie diluvienne à partir de 5 mm/h',
-      setter: setRainAlert,
     },
     {
       name: 'Alerte Canicule (°C)',
-      value: heatAlert,
+      key: 'heatThreshold', 
       info: 'Risque de canicule à partir de 40°C',
-      setter: setHeatAlert,
     },
     {
       name: 'Alerte Froid (°C)',
-      value: coldAlert,
+      key: 'coldThreshold',
       info: 'Risque de grand froid à partir de -20°C',
-      setter: setColdAlert,
     },
   ];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const favoriteCities = await getFavoriteCity(userId);
-        const weatherDataArray = [];
-
-        for (const city of favoriteCities) {
-          const weatherData = await getCityWeather(city.lat, city.lon);
-          weatherDataArray.push({ city, weatherData })
-          ;
-        }
-        setMeteoData(weatherDataArray);
-      } catch (error) {
-        console.error('Error fetching weather data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const increaseValue = (setValue) => {
-    setValue((prevValue) => prevValue + 1);
+  const increaseValue = (key) => {
+    setAlertPreferences(prevState => ({ ...prevState, [key]: prevState[key] + 1 }));
   };
 
-  const decreaseValue = (setValue, alertName) => {
-    setValue((prevValue) => {
-      if (alertName === coldAlert) {
-        return prevValue - 1;
-      } else {
-        return prevValue > 0 ? prevValue - 1 : 0;
-      }
-    });
+  const decreaseValue = (key) => {
+    setAlertPreferences(prevState => ({
+      ...prevState,
+      [key]: key === 'coldThreshold' ? Math.max(prevState[key] - 1, 0) : Math.max(prevState[key] - 1, 0)
+    }));
   };
   
-
   const showAlertInfo = (alert) => {
     setSelectedAlert(alert);
     setInfoVisible(true);
@@ -91,14 +60,8 @@ const WeatherAlertSettings = () => {
   };
 
   const saveAlertPreferences = async () => {
-    const preferences = {
-      windThreshold: windAlert,
-      rainThreshold: rainAlert,
-      heatThreshold: heatAlert,
-      coldThreshold: coldAlert,
-    };
-    await storeAlertPreferences(userId, preferences);
-    checkAlertThresholds(userId, meteoData, preferences);
+    await storeAlertPreferences(userId, alertPreferences);
+    checkAlertThresholds(userId, meteoData, alertPreferences);
   };
 
   useEffect(() => {
@@ -106,15 +69,9 @@ const WeatherAlertSettings = () => {
       try {
         const preferences = await getAlertPreferences(userId);
         if (preferences) {
-          setWindAlert(preferences.windThreshold);
-          setRainAlert(preferences.rainThreshold);
-          setHeatAlert(preferences.heatThreshold);
-          setColdAlert(preferences.coldThreshold);
+          setAlertPreferences(preferences);
         } else {
-          setWindAlert(50);
-          setRainAlert(10);
-          setHeatAlert(30);
-          setColdAlert(0);
+          setAlertPreferences(WeatherAlertPreferences);
         }
       } catch (error) {
         console.error('Error loading alert preferences:', error);
@@ -124,25 +81,9 @@ const WeatherAlertSettings = () => {
     loadPreferences();
   }, [userId]);
 
-  useEffect(() => {
-    if (meteoData) {
-      checkAlertThresholds(userId, meteoData);
-    }
-  }, [userId, meteoData]);
 
   return (
     <View style={styles.container}>
-      <View style={styles.container}>
-        {meteoData && (
-          <View style={styles.weatherContainer}>
-            <Text style={styles.weatherText}>City: {meteoData[0].weatherData.name}</Text>
-            <Text style={styles.weatherText}>Weather: {meteoData[0]?.weatherData?.weather?.[0]?.description}</Text>
-            <Text style={styles.weatherText}>Temperature: {meteoData[0]?.weatherData?.main?.temp_min}°C</Text>
-            <Text style={styles.weatherText}>Humidity: {meteoData[0]?.weatherData?.main?.humidity}%</Text>
-          </View>
-        )}
-
-    </View>
       {alerts.map((alert, index) => (
         <View key={index} style={styles.alertContainer}>
           <TouchableOpacity onPress={() => showAlertInfo(alert.info)}>
@@ -152,11 +93,11 @@ const WeatherAlertSettings = () => {
           </TouchableOpacity> 
           <Text style={styles.alertText}>{alert.name}:</Text>
           <View style={styles.valueContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => decreaseValue(alert.setter, alert.value)}>
-            <Text style={styles.buttonText}>-</Text>
-          </TouchableOpacity>
-            <Text style={styles.alertValue}>{alert.value}</Text>
-            <TouchableOpacity style={styles.button} onPress={() => increaseValue(alert.setter)}>
+            <TouchableOpacity style={styles.button} onPress={() => decreaseValue(alert.key)}>
+              <Text style={styles.buttonText}>-</Text>
+            </TouchableOpacity>
+            <Text style={styles.alertValue}>{alertPreferences[alert.key]}</Text>
+            <TouchableOpacity style={styles.button} onPress={() => increaseValue(alert.key)}>
               <Text style={styles.buttonText}>+</Text>
             </TouchableOpacity>
           </View>
@@ -268,5 +209,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WeatherAlertSettings;
-
+export default PreferenceScreen;

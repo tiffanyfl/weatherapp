@@ -13,7 +13,8 @@ import { StyleSheet, Text, View, TextInput, TouchableHighlight, Pressable, FlatL
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from "./screens/HomeScreen";
 import FavoriteScreen from './screens/FavoriteScreen';
-import WeatherAlertPage from './screens/WeatherAlertPage';
+import PreferenceScreen from './screens/PreferenceScreen';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -48,7 +49,7 @@ function App() {
               })}
           />
           <Tab.Screen name="Favorite" component={FavoriteScreen} />
-          <Tab.Screen name="Alert" component={WeatherAlertPage} />
+          <Tab.Screen name="Alert" component={PreferenceScreen} />
         </Tab.Navigator>
       ) : (
         <Stack.Navigator>
