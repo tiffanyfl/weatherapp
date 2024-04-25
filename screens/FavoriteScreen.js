@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView  } from 'react-native';
+import { Text, View, Button, SafeAreaView, ScrollView  } from 'react-native';
 import { useState, useEffect } from 'react';
-import { favoriteList } from "./HomeScreen";
 import { getCityWeather } from "../api/openWeather";
 
 import { WeatherData } from "../models/WeatherData.model";
@@ -14,7 +13,7 @@ import { getFavoriteCity, deleteFavoriteCity } from '../services/FavoriteCities'
 
 import { general, criteres } from '../css/styles';
 
-const FavoriteScreen = ({route }) => {
+const FavoriteScreen = ({route}) => {
   const userId = auth.currentUser.uid;
   const navigation = useNavigation();
 

@@ -239,23 +239,4 @@ const HomeScreen = ({}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#A3B18A',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    alignContent: 'flex-start'
-  },
-  title: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  input: {
-    backgroundColor: "#C4CFB2",
-    width: 300,
-    height: 40,
-  },
-});
-
 export default HomeScreen;
