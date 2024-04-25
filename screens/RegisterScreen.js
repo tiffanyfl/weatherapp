@@ -1,8 +1,10 @@
-import { View, Text, Button, TextInput, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text, Button, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import React, { useState } from 'react';
 import authService from "../services/AuthService";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
+import logo from "../assets/logo.png";
+import { general, criteres } from '../css/styles';
 
 function RegisterScreen() {
   const navigation = useNavigation();
@@ -71,103 +73,69 @@ function RegisterScreen() {
   }
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>S'inscrire</Text>
-      <Text style={styles.error}>{error}</Text>
+    <View style={general.backg}>
+      <Image source={logo} style={general.logo} /> 
+      <Text style={general.title}>WeatherGuard</Text>
+
+      <Text style={{marginBottom:10}}>Inscription</Text>
       <TextInput
-        style={styles.input}
+        style={general.input}
         placeholder="Pseudo"
         onChangeText={(text) => setPseudo(text)}
         value={pseudo}
       />
-      <Text style={styles.error}>{error}</Text>
       <TextInput
-        style={styles.input}
+        style={general.input}
         placeholder="Email"
         onChangeText={(text) => setEmail(text)}
         value={email}
       />
       <TextInput
-        style={styles.input}
+        style={general.input}
         placeholder="Mot de passe"
         secureTextEntry
         onChangeText={handlePasswordChange}
         value={password}
       />
       <TextInput
-        style={styles.input}
+        style={general.input}
         placeholder="Confirmer mot de passe"
         secureTextEntry
         onChangeText={(text) => setConfirmPassword(text)}
         value={confirmPassword}
       />
-      <View style={styles.criteriaContainer}>
-        <View style={styles.criteriaItem}>
+      <View style={criteres.criteriaContainer}>
+        <View style={criteres.criteriaItem}>
           {passwordCriteria.minLength ? <Icon name="check-circle" color="green" size={20} /> : <Icon name="circle" color="gray" size={20} />}
           <Text>  Minimum 8 caractères</Text>
         </View>
-        <View style={styles.criteriaItem}>
+        <View style={criteres.criteriaItem}>
           {passwordCriteria.hasUpperCase ? <Icon name="check-circle" color="green" size={20} /> : <Icon name="circle" color="gray" size={20} />}
           <Text>  Au moins une majuscule</Text>
         </View>
-        <View style={styles.criteriaItem}>
+        <View style={criteres.criteriaItem}>
           {passwordCriteria.hasLowerCase ? <Icon name="check-circle" color="green" size={20} /> : <Icon name="circle" color="gray" size={20} />}
           <Text>  Au moins une miniscule</Text>
         </View>
-        <View style={styles.criteriaItem}>
+        <View style={criteres.criteriaItem}>
           {passwordCriteria.hasNumber ? <Icon name="check-circle" color="green" size={20} /> : <Icon name="circle" color="gray" size={20} />}
           <Text>  Au moins un chiffre</Text>
         </View>
-        <View style={styles.criteriaItem}>
+        <View style={criteres.criteriaItem}>
           {confirmPassword&&password===confirmPassword ? <Icon name="check-circle" color="green" size={20} /> : <Icon name="circle" color="gray" size={20} />}
           <Text>  Les mots de passe correspondent</Text>
         </View>
       </View>
-      <Button
+      <Button style={{backgroundColor:"#594b8e"}}
         title="Créer un compte"
         onPress={creerUnCompte}
         disabled={!email || !password || !confirmPassword}
       />
       <TouchableOpacity onPress={goToLoginScreen}>
-        <Text style={styles.loginLink}>Déjà un compte ? Se connecter</Text>
+        <Text style={criteres.redirectLink}>Déjà un compte ? Se connecter</Text>
       </TouchableOpacity>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  input: {
-    width: 300,
-    height: 40,
-    borderColor: 'green',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-  criteriaContainer: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    marginBottom: 10,
-  },
-  criteriaItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 5,
-  },
-  error: {
-    color: 'red',
-    marginBottom: 10,
-  },
-  loginLink: {
-    marginTop: 10,
-    color: 'blue',
-    textDecorationLine: 'underline',
-  }
-});
 
 export default RegisterScreen;

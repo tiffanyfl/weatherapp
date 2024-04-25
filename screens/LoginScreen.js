@@ -1,7 +1,9 @@
-import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Image, Button, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from "@react-navigation/native";
 import authService from "../services/AuthService";
+import logo from "../assets/logo.png";
+import { general, criteres } from '../css/styles';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -25,59 +27,32 @@ const LoginScreen = () => {
   }
 
   return (
-    
-    <View style={styles.container}>
-      <Text style={styles.title}>Se connecter</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Mot de passe"
-        secureTextEntry
-        onChangeText={(text) => setPassword(text)}
-        value={password}
-      />
-      <Button title='Se connecter' onPress={() => handleLogin()}/>
-      {error ? <Text style={styles.error}>{error}</Text> : null}
-      <View style={{ marginVertical: 10 }} />
-      <TouchableOpacity onPress={goToRegisterScreen}>
-        <Text style={styles.registerLink}>Pas encore de compte ? S'inscrire</Text>
-      </TouchableOpacity>
+    <View style={general.backg}>
+      <View style={general.container}>
+        <Image source={logo} style={general.logo} /> 
+        <Text style={general.title}>WeatherGuard</Text>
+        <Text style={{marginBottom:10}}>Connexion</Text>
+        <TextInput
+          style={general.input}
+          placeholder="Email"
+          onChangeText={(text) => setEmail(text)}
+          value={email}
+        />
+        <TextInput
+          style={general.input}
+          placeholder="Mot de passe"
+          secureTextEntry
+          onChangeText={(text) => setPassword(text)}
+          value={password}
+        />
+        <Button title='Se connecter' onPress={() => handleLogin()}/>
+        <View style={{ marginVertical: 10 }} />
+        <TouchableOpacity onPress={goToRegisterScreen}>
+          <Text style={criteres.redirectLink}>Pas encore de compte ? S'inscrire</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 20,
-    marginBottom: 20,
-  },
-  input: {
-    width: 300,
-    height: 40,
-    borderColor: 'green',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-  registerLink: {
-    marginTop: 10,
-    color: 'blue',
-    textDecorationLine: 'underline',
-  },
-  error: {
-    color: 'red',
-    marginTop: 10,
-  }
-});
 
 export default LoginScreen;

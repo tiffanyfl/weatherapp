@@ -16,6 +16,7 @@ import { storeFavoriteCity, getFavoriteCity } from '../services/FavoriteCities';
 import { WeatherAlertPreferences } from '../models/AlertPreferences.model';
 import alertFromFavorite from '../controllers/AlertFromFavorite.controller';
 import { auth } from '../services/firebase';
+import { general, criteres } from '../css/styles';
 
 
 export let favoriteList = new FavoriteCities([]);
@@ -222,14 +223,14 @@ const HomeScreen = ({}) => {
   //console.log(weather);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={general.backg}>
       <View style={{padding: 10}}>
-        <Text style={{color: 'white', fontWeight: 'bold'}}>Welcome {pseudo}</Text>
+        <Text style={{color: 'Black', fontWeight: 'bold'}}>Welcome {pseudo}</Text>
         <Button color="#7E8572" title="Log out" onPress={logout} />
       </View>
       <View style={{ padding: 40 }}>
       <TextInput
-            style={styles.input}
+            style={general.input}
             onChangeText={input => onChangeSearch(input)}
             value={search}
             placeholder='search a city'
@@ -265,7 +266,7 @@ const HomeScreen = ({}) => {
           <WeatherComponent obj={weather}></WeatherComponent>
           </View>
         ) : 
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', }}><Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>Search a city to see the weather 👀</Text></View> 
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', }}><Text style={{color: 'black', fontWeight: 'bold', fontSize: 20}}>Search a city to see the weather 👀</Text></View> 
         }
 
       

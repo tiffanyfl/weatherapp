@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { getFavoriteCity, deleteFavoriteCity, getOneCity } from '../services/FavoriteCities';
 
+import { general, criteres } from '../css/styles';
 
 const FavoriteScreen = ({route, param }) => {
   console.log(param);
@@ -112,7 +113,7 @@ const FavoriteScreen = ({route, param }) => {
 
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={general.backg}>
       <ScrollView> 
       {(weather.length) > 0 ? (
         weather.map((location, key) => {
@@ -143,24 +144,5 @@ const FavoriteScreen = ({route, param }) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#A3B18A',
-    //justifyContent: 'center',
-    //alignItems: 'center',
-  },
-  title: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  input: {
-    backgroundColor: "#C4CFB2",
-    width: "90%",
-    width: 600,
-    height: 40,
-  },
-});
 
 export default FavoriteScreen;
