@@ -86,10 +86,10 @@ const HomeScreen = ({}) => {
   
   useEffect(() => {
     
-  }, [userUid]);
+  }, [userId]);
   const timer = setTimeout(() => {
     let ignore = false;
-    getFavoriteCity(userUid).then((item) => {
+    getFavoriteCity(userId).then((item) => {
       //console.log(item);
       //setTableau(item);
       /*if(item.length == 0){
@@ -205,7 +205,7 @@ const HomeScreen = ({}) => {
     console.log(newElement2);
     console.log(tableau);
 
-    storeFavoriteCity(userUid, tableau);
+    storeFavoriteCity(userId, tableau);
     //storeFavoriteCity(userUid, newElement2);
 
     //navigation.navigate('Favorite', tableau);
