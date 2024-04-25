@@ -1,10 +1,10 @@
 // Le Parent
 export class City {
-    nom = null;
-    lat = null;
-    lon = null;
-    favoris = null;
-    observers = null;
+    nom = '';
+    lat = 0;
+    lon = 0;
+    favoris = false;
+    observers = [];
 
     constructor(nom, lat, lon, favoris) {
         this.nom = nom;

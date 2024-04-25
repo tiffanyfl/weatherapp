@@ -29,14 +29,14 @@ const HomeScreen = ({}) => {
   const [cityObject, setCityObject] = useState({});
   const [cityName, setCityName] = useState('');
 
-  let villeLat;
-  let villeLon;
+  let cityLat;
+  let cityLon;
   let weatherDataObject;
-  let testVille;
-  let villeRecherchee;
+  let cityModel;
+  let citySearched;
   const [tableau, setTableau] = useState([]);
   
-  let sayHello;
+  let addCityToFavorite;
 
   // Authentification
   useEffect(() => {
@@ -90,61 +90,48 @@ const HomeScreen = ({}) => {
   const timer = setTimeout(() => {
     let ignore = false;
     getFavoriteCity(userUid).then((item) => {
-      //console.log(item);
-      //setTableau(item);
-      /*if(item.length == 0){
+      if(item.length == 0){
         setTableau([]);
       } else {
       setTableau(item);
   
-      }*/
-      setTableau(item);
-      //tableau.push(item);
-      //console.log(tableau);
+      }
       return item;
   
     });
-    /*return () => {
-      ignore = true;
-    };*/
   }, 5000);
-  //return () => clearTimeout(timer)
   //console.log(tableau);
-  
-
-  
 
   // search for a city and show weather data when user finished typing in the search bar
   useEffect(() => {
     
     if(search !== ''){
       const timer = setTimeout(() => {
-      //console.log("On recherche quelque chose :  " + search);
+        citySearched = getCityGPSCoord(search);
 
-        villeRecherchee = getCityGPSCoord(search);
-        villeRecherchee.then((result) => {
+        citySearched.then((result) => {
         if(list === ''){
-          villeLat = result[0].lat;
-          villeLon = result[0].lon;
-          testVille = new City(result[0].name, result[0].lat, result[0].lon, false);
-          
-          setCityObject(testVille);
-          setCityName(result[0].name);
+          cityLat = result[0].lat;
+          cityLon = result[0].lon;
+          cityModel = new City(result[0].local_names.fr, result[0].lat, result[0].lon, false);
+
+          setCityObject(cityModel);
+          setCityName(result[0].local_names.fr);
         } else {
-          villeLat = result[list].lat;
-          villeLon = result[list].lon;
-          testVille = new City(result[list].name, result[list].lat, result[list].lon, false);
+          cityLat = result[list].lat;
+          cityLon = result[list].lon;
+          cityModel = new City(result[list].local_names.fr, result[list].lat, result[list].lon, false);
           
-          setCityObject(testVille);
-          setCityName(result[list].name);
+          setCityObject(cityModel);
+          setCityName(result[list].local_names.fr);
         }
         
         setLocations(result);
-        getCityWeather(villeLat, villeLon).then((val) => {
+        getCityWeather(cityLat, cityLon).then((val) => {
           const dateSunrise = new Date(val.sys.sunrise * 1000);
           const dateSunset = new Date(val.sys.sunset * 1000);
           weatherDataObject = new WeatherData.Builder()
-          .setNomVille(testVille.nom)
+          .setNomVille(cityModel.nom)
           .setDescription(val.weather[0].description)
           .setTemperatureActuelle(val.main.temp)
           .setTemperatureMin(val.main.temp_min)
@@ -176,34 +163,17 @@ const HomeScreen = ({}) => {
   }, [search, list]);
   
   
-  sayHello = () => {
+  addCityToFavorite = () => {
     cityObject.subscribe(favoriteList);
     cityObject.notify(cityObject.nom);
     cityObject.setFavoris(true);
     favoriteList.setFavoriteCitiesArray(cityObject);  
     
-
-    //console.log(tableau);
-
-   // for (let i = 0; i < favoriteList.favoriteCitiesArray.length; i++){
-   // let newElement = {"nom": favoriteList.favoriteCitiesArray[i].nom, "lat": favoriteList.favoriteCitiesArray[i].lat, "lon": favoriteList.favoriteCitiesArray[i].lon};
-      //setTableau(tableau => [...tableau, newElement]);
-      //setTableau([tableau, newElement]);
-   //   tableau[i++] = newElement;
-      //
-      //tableau.push(newElement);
-
-   // }
-    let favoriteListLast = favoriteList.favoriteCitiesArray.slice(-1);
-    let newElement1 = {"nom": favoriteListLast[0].nom, "lat": favoriteListLast[0].lat, "lon": favoriteListLast[0].lon};
     let newElement2 = {"nom": cityObject.nom, "lat": cityObject.lat, "lon": cityObject.lon};
     
-    //setTableau(tableau => [...tableau, newElement]);
-    //setTableau(tableau => [...tableau, newElement2]);
     tableau.push(newElement2);
-    //console.log(newElement1);
-    console.log(newElement2);
-    console.log(tableau);
+    //console.log(newElement2);
+    //console.log(tableau);
 
     storeFavoriteCity(userUid, tableau);
     //storeFavoriteCity(userUid, newElement2);
@@ -211,14 +181,6 @@ const HomeScreen = ({}) => {
     //navigation.navigate('Favorite', tableau);
     navigation.navigate('Favorite', newElement2);
   };
-
-    function searchList({isClicked}){
-      if(!isClicked) {
-        return (
-          console.log("test")
-        );
-      }
-    }
   //console.log(weather);
 
   return (
@@ -259,7 +221,7 @@ const HomeScreen = ({}) => {
         <View style={{ flex: 1 }}>
          <Button
              title="Add to favorites"
-             onPress={sayHello}
+             onPress={addCityToFavorite}
              color="#7E8572"
           />
           <WeatherComponent obj={weather}></WeatherComponent>
