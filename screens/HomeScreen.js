@@ -188,7 +188,7 @@ const HomeScreen = ({}) => {
     <SafeAreaView style={general.backg}>
       <View style={{padding: 10}}>
         <Text style={{color: 'Black', fontWeight: 'bold'}}>Welcome {pseudo}</Text>
-        <Button color="#7E8572" title="Log out" onPress={logout} />
+        <Button color="#13315C" title="Log out" onPress={logout} />
       </View>
       <View style={{ padding: 40 }}>
       <TextInput
@@ -206,8 +206,8 @@ const HomeScreen = ({}) => {
                     <TouchableOpacity
                       key={item.key}
                       onPress={() => onchangeList(key)}>
-                      <View style={{backgroundColor: '#C4CFB2', color: 'white'}}>
-                        <Text style={{ color: '#7E8572'}}>{location.name}, {location.state}, {location.country}</Text>
+                      <View style={{backgroundColor: '#5EB1BF'}}>
+                        <Text style={{ color: '#13315C'}}>{location.name}, {location.state}, {location.country}</Text>
                       </View>
                     </TouchableOpacity>
                   )}
@@ -223,7 +223,7 @@ const HomeScreen = ({}) => {
          <Button
              title="Add to favorites"
              onPress={addCityToFavorite}
-             color="#7E8572"
+             color="#13315C"
           />
           <WeatherComponent obj={weather}></WeatherComponent>
           </View>

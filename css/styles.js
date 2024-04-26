@@ -59,7 +59,7 @@ const alertcss = StyleSheet.create({
   infoIconContainer: {
     width: 30,
     height: 30,
-    backgroundColor: '#007bff',
+    backgroundColor: '#13315C',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 15,
@@ -122,7 +122,7 @@ const alertcss = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   saveButton: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#13315C',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,

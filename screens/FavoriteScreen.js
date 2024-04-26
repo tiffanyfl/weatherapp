@@ -96,20 +96,15 @@ const FavoriteScreen = ({route}) => {
               <Button
                 title="Delete from favorites"
                 onPress={() => deleteCityFromFavorite(location, key)}
-                color="#7E8572"
+                color="#13315C"
               />
               <WeatherComponent obj={location}></WeatherComponent>
             </View>
           );
         })
       ) : 
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', }}><Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>Add a city to favorite from Home page 💕</Text></View> 
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', }}><Text style={{color: '#13315C', fontWeight: 'bold', fontSize: 20}}>Add a city to favorite from Home page 💕</Text></View> 
       }
-
-<Button
-        title="Go to Home"
-        onPress={() => navigation.navigate('HomeScreen')}
-      />
       
       </ScrollView>
     </SafeAreaView>

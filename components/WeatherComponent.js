@@ -47,12 +47,12 @@ export const WeatherComponent = (objetMeteo) => {
       paddingTop: 40
     },
     title: {
-      color: 'white',
+      color: '#13315C',
       fontWeight: 'bold',
       fontSize: 50
     },
     title2: {
-      color: 'white',
+      color: '#13315C',
       fontWeight: 'bold',
       fontSize: 20
     },
@@ -73,7 +73,7 @@ export const WeatherComponent = (objetMeteo) => {
       height: 100
     },
     bigBoldWhiteText: {
-      color: 'white',
+      color: '#13315C',
       fontWeight: 'bold',
       fontSize: 25
     },
