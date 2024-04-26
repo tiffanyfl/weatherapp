@@ -18,7 +18,6 @@ export const getFavoriteCity = async(userId) => {
         if(favoriteCityDoc.exists()){
             return favoriteCityDoc.data().cities;
         } else {
-            console.log("problem");
             return null;
         }
     } catch(error){

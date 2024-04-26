@@ -13,12 +13,15 @@ const alertFromFavorite = (userId) => {
         const favoriteCities = await getFavoriteCity(userId);
         const weatherDataArray = [];
 
-        for (const city of favoriteCities) {
-          const weatherData = await getCityWeather(city.lat, city.lon);
-          weatherDataArray.push({ city, weatherData });
-        }
+        if (favoriteCities && favoriteCities.length > 0) { 
+          for (const city of favoriteCities) {
+            const weatherData = await getCityWeather(city.lat, city.lon);
+            weatherDataArray.push({ city, weatherData });
+          }
+  
+          setMeteoData(weatherDataArray);
 
-        setMeteoData(weatherDataArray);
+        }
       } catch (error) {
         console.error('Error fetching weather data:', error);
       }

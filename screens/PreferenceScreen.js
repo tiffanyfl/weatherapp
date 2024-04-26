@@ -6,7 +6,7 @@ import { storeAlertPreferences, getAlertPreferences, checkAlertThresholds } from
 import { auth } from '../services/firebase';
 import { WeatherAlertPreferences } from '../models/AlertPreferences.model';
 import alertFromFavorite from '../controllers/AlertFromFavorite.controller';
-import { general, criteres, alertcss } from '../css/styles';
+import { general, alertcss } from '../css/styles';
 
 const PreferenceScreen = () => {
   const userId = auth.currentUser.uid;

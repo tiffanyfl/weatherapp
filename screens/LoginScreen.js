@@ -18,7 +18,18 @@ const LoginScreen = () => {
       await authService.signIn(email, password);
       navigation.navigate('HomeScreen'); 
     } catch (error) {
-      setError(error.message); 
+      switch (error.code) {
+        case "auth/invalid-email":
+          setError("L'adresse e-mail est invalide.");
+          break;
+        case "auth/invalid-credential":
+          setError("Le mot de passe est invalide.");
+          break;
+        default:
+          console.error("Erreur lors de la connexion :", error.code, error.message);
+          setError("Problème lors de la connexion : " + error.message);
+          break;
+      }
     }
   };
 
@@ -31,6 +42,7 @@ const LoginScreen = () => {
       <View style={general.container}>
         <Image source={logo} style={general.logo} /> 
         <Text style={general.title}>WeatherGuard</Text>
+        <Text style={general.error}>{error}</Text>
         <Text style={{marginBottom:10}}>Connexion</Text>
         <TextInput
           style={general.input}

@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View, TextInput, TouchableHighlight, Pressable, FlatList, ScrollView, Image, Button } from 'react-native';
-import { useState, useEffect } from 'react'
+import { StyleSheet, Text, View, Image } from 'react-native';
 
 export const WeatherComponent = (objetMeteo) => {
     const obj = objetMeteo;

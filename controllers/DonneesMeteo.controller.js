@@ -1,9 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, TouchableHighlight, Pressable, FlatList } from 'react-native';
 import { getCityGPSCoord, getCityWeather } from "../api/openWeather";
-import { WeatherData } from "../models/WeatherData.model";
 import { useState, useEffect } from 'react';
-import * as React from 'react';
 
 export const DonneesMeteoController = (() => {
     const [locations, setLocations] = useState([]);

@@ -30,7 +30,11 @@ const general = StyleSheet.create({
     justifyContent: 'center', 
     alignItems: 'center', 
     backgroundColor: "#CDEDF6", 
-  }
+  },
+  error: {
+    color: 'red',
+    marginBottom: 10,
+  },
 });
 
 const criteres = StyleSheet.create({
@@ -50,6 +54,7 @@ const criteres = StyleSheet.create({
     textDecorationLine: 'underline',
   }
 });
+
 const alertcss = StyleSheet.create({
   alertContainer: {
     flexDirection: 'row',

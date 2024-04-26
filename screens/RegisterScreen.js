@@ -76,7 +76,7 @@ function RegisterScreen() {
     <View style={general.backg}>
       <Image source={logo} style={general.logo} /> 
       <Text style={general.title}>WeatherGuard</Text>
-
+      <Text style={general.error}>{error}</Text>
       <Text style={{marginBottom:10}}>Inscription</Text>
       <TextInput
         style={general.input}

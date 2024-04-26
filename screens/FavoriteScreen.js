@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { getFavoriteCity, deleteFavoriteCity } from '../services/FavoriteCities';
 
-import { general, criteres } from '../css/styles';
+import { general } from '../css/styles';
 
 const FavoriteScreen = ({route}) => {
   const userId = auth.currentUser.uid;
@@ -90,7 +90,6 @@ const FavoriteScreen = ({route}) => {
       <ScrollView> 
       {(weather.length) > 0 ? (
         weather.map((location, key) => {
-          //console.log(location);
           return (
             <View style={{padding: 10}}>
               <Button
