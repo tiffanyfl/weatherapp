@@ -6,7 +6,7 @@ export async function getCityGPSCoord(city) {
     try {
       const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=3&lang=fr&appid=${apiKey}`);
       const json = await response.json();
-      console.log(response);
+      //console.log(json);
       //getCityWeather(json[0].lat, json[0].lon);
       return json;
       //return getCityWeather(json[0].lat, json[0].lon);
@@ -19,6 +19,7 @@ export async function getCityWeather(lat, lon) {
     try {
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=fr&appid=${apiKey}`);
         const json = await response.json();
+        console.log(json);
         return json;
     } catch(error) {
         console.log(error);

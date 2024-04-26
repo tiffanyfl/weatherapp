@@ -132,22 +132,22 @@ const HomeScreen = ({}) => {
           const dateSunrise = new Date(val.sys.sunrise * 1000);
           const dateSunset = new Date(val.sys.sunset * 1000);
           weatherDataObject = new WeatherData.Builder()
-          .setNomVille(cityModel.nom)
+          .setCity(cityModel.name)
           .setDescription(val.weather[0].description)
-          .setTemperatureActuelle(val.main.temp)
+          .setTemperature(val.main.temp)
           .setTemperatureMin(val.main.temp_min)
           .setTemperatureMax(val.main.temp_max)
-          .setRessenti(val.main.feels_like)
-          .setHumidite(val.main.humidity)
-          .setPression(val.main.pressure)
-          .setNuages(val.clouds.all)
-          .setIcone(val.weather[0].icon)
-          .setVentDegre(val.wind.deg)
-          .setVentVitesse(val.wind.speed)
-          .setLeverSoleilHeure(dateSunrise.getHours().toString())
-          .setLeverSoleilMinute(dateSunrise.getMinutes().toString())
-          .setCoucherSoleilHeure(dateSunset.getHours().toString())
-          .setCoucherSoleilMinute(dateSunset.getMinutes().toString())
+          .setFeelsLike(val.main.feels_like)
+          .setHumidity(val.main.humidity)
+          .setPressure(val.main.pressure)
+          .setClouds(val.clouds.all)
+          .setIcon(val.weather[0].icon)
+          .setWindDegree(val.wind.deg)
+          .setWindSpeed(val.wind.speed)
+          .setSunriseHour(dateSunrise.getHours().toString())
+          .setSunriseMinute(dateSunrise.getMinutes().toString())
+          .setSunsetHour(dateSunset.getHours().toString())
+          .setSunsetMinute(dateSunset.getMinutes().toString())
           .build();
     
           setWeather(weatherDataObject);
@@ -166,11 +166,11 @@ const HomeScreen = ({}) => {
   
   addCityToFavorite = () => {
     cityObject.subscribe(favoriteList);
-    cityObject.notify(cityObject.nom);
-    cityObject.setFavoris(true);
+    cityObject.notify(cityObject.name);
+    cityObject.setFavorite(true);
     favoriteList.setFavoriteCitiesArray(cityObject);  
     
-    let newElement2 = {"nom": cityObject.nom, "lat": cityObject.lat, "lon": cityObject.lon};
+    let newElement2 = {"name": cityObject.name, "lat": cityObject.lat, "lon": cityObject.lon};
     
     tableau.push(newElement2);
     //console.log(newElement2);

@@ -1,41 +1,41 @@
 export class WeatherData  {
-    nomVille = null;
+    city = null;
     description = null;
-    temperatureActuelle = null;
+    temperature = null;
     temperatureMin = null;
     temperatureMax = null;
-    ressenti = null;
-    humidite = null;
-    pression = null;
-    nuages = null;
-    icone = null;
-    ventDegre = null;
-    ventVitesse = null;
-    leverSoleilHeure = null;
-    leverSoleilMinute = null;
-    coucherSoleilHeure = null;
-    coucherSoleilMinute = null;
+    feelsLike = null;
+    humidity = null;
+    pressure = null;
+    clouds = null;
+    icon = null;
+    windDegree = null;
+    windSpeed = null;
+    sunriseHour = null;
+    sunriseMinute = null;
+    sunsetHour = null;
+    sunsetMinute = null;
 
     static Builder = class { 
-        nomVille = null;
+        city = null;
         description = null;
-        temperatureActuelle = null;
+        temperature = null;
         temperatureMin = null;
         temperatureMax = null;
-        ressenti = null;
-        humidite = null;
-        pression = null;
-        nuages = null;
-        icone = null;
-        ventDegre = null;
-        ventVitesse = null;
-        leverSoleilHeure = null;
-        leverSoleilMinute = null;
-        coucherSoleilHeure = null;
-        coucherSoleilMinute = null;
+        feelsLike = null;
+        humidity = null;
+        pressure = null;
+        clouds = null;
+        icon = null;
+        windDegree = null;
+        windSpeed = null;
+        sunriseHour = null;
+        sunriseMinute = null;
+        sunsetHour = null;
+        sunsetMinute = null;
 
-        setNomVille(ville){
-            this.nomVille = ville;
+        setCity(city){
+            this.city = city;
             return this;
         }
 
@@ -44,13 +44,11 @@ export class WeatherData  {
             return this;
         }
 
-        setTemperatureActuelle(temp) {
-            this.temperatureActuelle = Math.round(temp);
+        setTemperature(temp) {
+            this.temperature = Math.round(temp);
             return this;
         }
         
-
-
         setTemperatureMin(temp) {
             this.temperatureMin = Math.round(temp);
             return this;
@@ -59,91 +57,91 @@ export class WeatherData  {
             this.temperatureMax = Math.round(temp);
             return this;
         }
-        setRessenti(res) {
-            this.ressenti = Math.round(res);
+        setFeelsLike(res) {
+            this.feelsLike = Math.round(res);
             return this;
         }
-        setHumidite(hum) {
-            this.humidite = Math.round(hum);
+        setHumidity(hum) {
+            this.humidity = Math.round(hum);
             return this;
         }
-        setPression(pres) {
-            this.pression = Math.round(pres);
+        setPressure(pres) {
+            this.pressure = Math.round(pres);
             return this;
         }
-        setNuages(nua) {
-            this.nuages = nua;
+        setClouds(nua) {
+            this.clouds = nua;
             return this;
         }
-        setIcone(icon) {
-            this.icone = 'https://openweathermap.org/img/wn/' + icon + '@4x.png';
+        setIcon(icon) {
+            this.icon = 'https://openweathermap.org/img/wn/' + icon + '@4x.png';
             return this;
         }
-        setVentDegre(ventD) {
-            this.ventDegre = Math.round(ventD);
+        setWindDegree(ventD) {
+            this.windDegree = Math.round(ventD);
             return this;
         }
-        setVentVitesse(ventV) {
-            this.ventVitesse = Math.round(ventV);
+        setWindSpeed(ventV) {
+            this.windSpeed = Math.round(ventV);
             return this;
         }
-        setLeverSoleilHeure(leverSHeure) {
-            this.leverSoleilHeure = leverSHeure;
+        setSunriseHour(leverSHeure) {
+            this.sunriseHour = leverSHeure;
             return this;
         }
-        setLeverSoleilMinute(leverSMinute) {
-            this.leverSoleilMinute = leverSMinute;
+        setSunriseMinute(leverSMinute) {
+            this.sunriseMinute = leverSMinute;
             return this;
         }
-        setCoucherSoleilHeure(coucherSHeure) {
-            this.coucherSoleilHeure = coucherSHeure;
+        setSunsetHour(coucherSHeure) {
+            this.sunsetHour = coucherSHeure;
             return this;
         }
-        setCoucherSoleilMinute(coucherSMinute) {
-            this.coucherSoleilMinute = coucherSMinute;
+        setSunsetMinute(coucherSMinute) {
+            this.sunsetMinute = coucherSMinute;
             return this;
         }
         build() {
             const weatherData = new WeatherData(
-                this.nomVille,
+                this.city,
                 this.description,
-                this.temperatureActuelle,
+                this.temperature,
                 this.temperatureMin,
                 this.temperatureMax,
-                this.ressenti,
-                this.humidite,
-                this.pression,
-                this.nuages,
-                this.icone,
-                this.ventDegre,
-                this.ventVitesse,
-                this.leverSoleilHeure,
-                this.leverSoleilMinute,
-                this.coucherSoleilHeure,
-                this.coucherSoleilMinute,
+                this.feelsLike,
+                this.humidity,
+                this.pressure,
+                this.clouds,
+                this.icon,
+                this.windDegree,
+                this.windSpeed,
+                this.sunriseHour,
+                this.sunriseMinute,
+                this.sunsetHour,
+                this.sunsetMinute,
             )
             return weatherData;
 
         }
     }
 
-    constructor(nom, description, temperatureActuelle, temperatureMin, temperatureMax, ressenti, humidite, pression, nuages, icone, ventDegre, ventVitesse, leverSoleilHeure, leverSoleilMinute, coucherSoleilHeure, coucherSoleilMinute) {
-        this.nomVille = nom;
+    constructor(city, description, temperature, temperatureMin, temperatureMax, feelsLike, humidity, pressure, clouds, icon, windDegree, windSpeed, sunriseHour, sunriseMinute, sunsetHour, sunsetMinute) {
+        this.city = city;
         this.description = description;
-        this.temperatureActuelle = temperatureActuelle;
+        this.temperature = temperature;
         this.temperatureMin = temperatureMin;
         this.temperatureMax = temperatureMax;
-        this.ressenti = ressenti;
-        this.humidite = humidite;
-        this.pression = pression;
-        this.nuages = nuages;
-        this.icone = icone;
-        this.ventDegre = ventDegre;
-        this.ventVitesse = ventVitesse;
-        this.leverSoleilHeure = leverSoleilHeure;
-        this.leverSoleilMinute = leverSoleilMinute;
-        this.coucherSoleilHeure = coucherSoleilHeure;
-        this.coucherSoleilMinute = coucherSoleilMinute;
+        this.feelsLike = feelsLike;
+        this.humidity = humidity;
+        this.pressure = pressure;
+        this.clouds = clouds;
+        this.icon = icon;
+        this.windDegree = windDegree;
+        this.windSpeed = windSpeed;
+        this.sunriseHour = sunriseHour;
+        this.sunriseMinute = sunriseMinute;
+        this.sunsetHour = sunsetHour;
+        this.sunsetMinute = sunsetMinute;
       }
         
       /*setTemperatureActuelle(temp){
@@ -155,31 +153,31 @@ export class WeatherData  {
         return this.result;
       }*/
 
-      getTemperatureActuelle(){
-        return this.temperatureActuelle;
-    }
+      /*getTemperature(){
+        return this.temperature;
+    }*/
 
     getAll(){
         return this;
     }
 
       toString() {
-        return `nomVille: ${this.nom}
+        return `city: ${this.city}
             description: ${this.description}
-            temperatureActuelle: ${this.temperatureActuelle}
+            temperature: ${this.temperature}
             temperatureMin: ${this.temperatureMin}
             temperatureMax: ${this.temperatureMax}
-            ressenti: ${this.ressenti}
-            humidite: ${this.humidite}
-            pression: ${this.pression}
-            nuages: ${this.nuages}
-            icone: ${this.icone}
-            ventDegre: ${this.ventDegre}
-            ventVitesse: ${this.ventVitesse}
-            leverSoleilHeure: ${this.leverSoleilHeure}
-            leverSoleilMinute: ${this.leverSoleilMinute}
-            coucherSoleilHeure: ${this.coucherSoleilHeure}
-            coucherSoleilMinute: ${this.coucherSoleilMinute}`;
+            feelsLike: ${this.feelsLike}
+            humidity: ${this.humidity}
+            pressure: ${this.pressure}
+            clouds: ${this.clouds}
+            icon: ${this.icon}
+            windDegree: ${this.windDegree}
+            windSpeed: ${this.windSpeed}
+            sunriseHour: ${this.sunriseHour}
+            sunriseMinute: ${this.sunriseMinute}
+            sunsetHour: ${this.sunsetHour}
+            sunsetMinute: ${this.sunsetMinute}`;
     }
 
           

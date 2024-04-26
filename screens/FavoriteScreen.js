@@ -27,7 +27,7 @@ const FavoriteScreen = ({route}) => {
   useEffect(() => {
     // get favoritecities from db
     getFavoriteCity(userId).then((item) => {
-      //console.log(item);
+      console.log(item);
       setCitiesInDb(item);
     
       // for every city from db, get weather & create WeatherData object
@@ -36,22 +36,22 @@ const FavoriteScreen = ({route}) => {
         const dateSunrise = new Date(val.sys.sunrise * 1000);
         const dateSunset = new Date(val.sys.sunset * 1000);
         weatherDataObject = new WeatherData.Builder()
-        .setNomVille(item[i].nom)
+        .setCity(item[i].name)
         .setDescription(val.weather[0].description)
-        .setTemperatureActuelle(val.main.temp)
+        .setTemperature(val.main.temp)
         .setTemperatureMin(val.main.temp_min)
         .setTemperatureMax(val.main.temp_max)
-        .setRessenti(val.main.feels_like)
-        .setHumidite(val.main.humidity)
-        .setPression(val.main.pressure)
-        .setNuages(val.clouds.all)
-        .setIcone(val.weather[0].icon)
-        .setVentDegre(val.wind.deg)
-        .setVentVitesse(val.wind.speed)
-        .setLeverSoleilHeure(dateSunrise.getHours().toString())
-        .setLeverSoleilMinute(dateSunrise.getMinutes().toString())
-        .setCoucherSoleilHeure(dateSunset.getHours().toString())
-        .setCoucherSoleilMinute(dateSunset.getMinutes().toString())
+        .setFeelsLike(val.main.feels_like)
+        .setHumidity(val.main.humidity)
+        .setPressure(val.main.pressure)
+        .setClouds(val.clouds.all)
+        .setIcon(val.weather[0].icon)
+        .setWindDegree(val.wind.deg)
+        .setWindSpeed(val.wind.speed)
+        .setSunriseHour(dateSunrise.getHours().toString())
+        .setSunriseMinute(dateSunrise.getMinutes().toString())
+        .setSunsetHour(dateSunset.getHours().toString())
+        .setSunsetMinute(dateSunset.getMinutes().toString())
         .build();
         if(weather.length = 0){
           setWeather(weatherDataObject);
@@ -75,14 +75,14 @@ const FavoriteScreen = ({route}) => {
     //console.log(citiesInDb);
     let cityInDb;
     for(let i = 0; i < citiesInDb.length; i++){
-      if(citiesInDb[i].nom == location.nomVille){
+      if(citiesInDb[i].name == location.city){
         cityInDb = citiesInDb[i];
       }
     }
     deleteFavoriteCity(userId, cityInDb, key);
-    setCitiesInDb(citiesInDb.filter(item => item.nom !== location.nomVille));
+    setCitiesInDb(citiesInDb.filter(item => item.name !== location.city));
 
-    setWeather(weather.filter(item => item.nomVille !== location.nomVille));
+    setWeather(weather.filter(item => item.city !== location.city));
   }
 
   return (

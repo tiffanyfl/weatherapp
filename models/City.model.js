@@ -3,14 +3,14 @@ export class City {
     nom = '';
     lat = 0;
     lon = 0;
-    favoris = false;
+    favorite = false;
     observers = [];
 
-    constructor(nom, lat, lon, favoris) {
-        this.nom = nom;
+    constructor(name, lat, lon, favorite) {
+        this.name = name;
         this.lat = lat;
         this.lon = lon;
-        this.favoris = favoris;
+        this.favorite = favorite;
         this.observers = []
     }
 
@@ -27,9 +27,9 @@ export class City {
     }
 
 
-    setNom(value) {
-        this.nom = value;
-        return this.nom;
+    setName(value) {
+        this.name = value;
+        return this.name;
     }
 
     setLat(value) {
@@ -42,10 +42,10 @@ export class City {
         return this.lon;
     }
 
-    setFavoris(value) {
-        this.favoris = value;
-        this.notify(this.favoris);
-        return this.favoris;
+    setFavorite(value) {
+        this.favorite = value;
+        this.notify(this.favorite);
+        return this.favorite;
     }
 
     
